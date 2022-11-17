@@ -2,4 +2,4 @@
 folders/*
 
 # exception to the rule
-!folders/**/.gitkeep 
+!**/.gitkeep 
