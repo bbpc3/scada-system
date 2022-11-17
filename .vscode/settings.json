@@ -1,0 +1,12 @@
+{
+    "vsmqtt.brokerProfiles": [
+        {
+            "name": "docker",
+            "host": "raspberrypi.fritz.box",
+            "port": 1883,
+            "clientId": "vsmqtt_client",
+            "username": "admin",
+            "password": "scada!123"
+        }
+    ]
+}

@@ -1,0 +1,116 @@
+version: "3"
+
+services:
+  fuxa:
+    image: frangoteam/fuxa:latest
+    container_name: fuxa
+    ports:
+      - 1881:1881
+    restart: unless-stopped
+    volumes:
+      - /home/pi/scada-system/DockerServer/folders/fuxa/appdata:/usr/src/app/FUXA/server/_appdata:rw
+      - /home/pi/scada-system/DockerServer/folders/fuxa/db:/usr/src/app/FUXA/server/_db:rw
+      - /home/pi/scada-system/DockerServer/folders/fuxa/logs:/usr/src/app/FUXA/server/_logs:rw
+      - /home/pi/scada-system/DockerServer/folders/fuxa/images:/usr/src/app/FUXA/server/_images:rw
+    depends_on:
+      - influxdb
+
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    volumes:
+      - /home/pi/scada-system/DockerServer/folders/mosquitto/config:/mosquitto/config:rw
+      - /home/pi/scada-system/DockerServer/folders/mosquitto/data:/mosquitto/data:rw
+      - /home/pi/scada-system/DockerServer/folders/mosquitto/log:/mosquitto/log:rw
+
+    ports:
+      - 1883:1883
+      - 9001:9001
+    restart: always
+
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb2
+    volumes:
+      - /home/pi/scada-system/DockerServer/folders/influxdb/data:/var/lib/influxdb2:rw
+
+    ports:
+      - 8086:8086
+    restart: unless-stopped
+
+  # chronograf:
+  #   image: chronograf:latest
+  #   ports:
+  #     - '127.0.0.1:8888:8888'
+  #   volumes:
+  #     - chronograf-storage:/var/lib/chronograf
+  #   depends_on:
+  #     - influxdb
+  #   environment:
+  #     - INFLUXDB_URL=http://influxdb:8086
+  #     - INFLUXDB_USERNAME=${DOCKER_INFLUXDB_INIT_USERNAME}
+  #     - INFLUXDB_PASSWORD=${DOCKER_INFLUXDB_INIT_PASSWORD}
+  #   restart: unless-stopped
+
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   ports:
+  #     - '3000:3000'
+  #   volumes:
+  #     - /home/pi/scada-system/DockerServer/folders/grafana/data:/var/lib/grafana
+  #     - /home/pi/scada-system/DockerServer/folders/grafana/grafana-provisioning:/etc/grafana/provisioning
+  #   depends_on:
+  #     - influxdb
+  #   environment:
+  #     - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
+  #     - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+  #   restart: unless-stopped
+
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf
+    #    links:
+    #      - influxdb
+    volumes:
+      #  Map Telegraf configuration file
+      - /home/pi/scada-system/DockerServer/folders/influxdb/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      #  Map /tmp to permanent storage  (this includes /tmp/metrics.out)
+      - /home/pi/scada-system/DockerServer/folders/influxdb:/tmp:rw
+    restart: unless-stopped
+    depends_on:
+      - influxdb
+    links:
+      - influxdb
+
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - SERVERURL=nexor001.duckdns.org #optional
+      - SERVERPORT=51820 #optional
+      - PEERS=MatthiasHandy,MatthiasLaptop,KevinLaptop
+      - PEERDNS=auto #optional
+      - INTERNAL_SUBNET=10.13.13.0 #optional
+      - ALLOWEDIPS=0.0.0.0/0 #optional
+      - LOG_CONFS=true #optional
+    volumes:
+      - /home/pi/scada-system/DockerServer/folders/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+
+  solarcontroller:
+    image: bleialf/solarcontroller:arm64
+    container_name: solarcontroller
+    restart: unless-stopped
+    depends_on:
+      - mosquitto

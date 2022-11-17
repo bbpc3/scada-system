@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="scada-system">scada-system</h1>
+<h2 id="pi-dokumentation">Pi Dokumentation</h2>
+<h3 id="ports">Ports</h3>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Funktion</th>
+<th>Beschreibung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8888</td>
+<td>LEDfx</td>
+<td>Webapp zur Steuerung der LEDs</td>
+</tr>
+<tr>
+<td>1881</td>
+<td>FUXA</td>
+<td>Scada/HMI Software zur Visualisierung</td>
+</tr>
+<tr>
+<td>1883</td>
+<td>MQTT-Broker</td>
+<td>Zentrale stelle um mittels MQTT kommunizieren zu können</td>
+</tr>
+<tr>
+<td>8086</td>
+<td>InfluxDB2</td>
+<td>Timeseries Datenbank</td>
+</tr>
+<tr>
+<td>9443</td>
+<td>Portainer</td>
+<td>Webapp um andere Dockercontainer zu verwalten</td>
+</tr>
+<tr>
+<td>3005</td>
+<td>Chronograf</td>
+<td>Webapp um die InfluxDB zu verwalten</td>
+</tr>
+<tr>
+<td>3000</td>
+<td>Grafana</td>
+<td>Webapp um die InfluxDB zu verwalten</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="mqtt-dokumentation">MQTT Dokumentation</h3>
+<h4 id="w%C3%A4rmepumpe">Wärmepumpe</h4>
+<ul>
+<li><code>BasisTopic: /home/wp...</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Beschreibung</th>
+<th>Topic</th>
+<th>Payload - Einheit</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zustandswerte der Wärmepumpe</td>
+<td>/state</td>
+<td>JSON</td>
+<td>ESP8266-WP</td>
+</tr>
+<tr>
+<td>Ändern des Ausleseintervalls</td>
+<td>/interval</td>
+<td>RAW - Sekunden</td>
+<td>FUXA</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="solarsteuerung">Solarsteuerung</h4>
+<ul>
+<li><code>BasisTopic: /home/solar...</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Beschreibung</th>
+<th>Topic</th>
+<th>Payload - Einheit</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zustandswerte der Solarsteuerung</td>
+<td>/state</td>
+<td>JSON</td>
+<td>SD-Card</td>
+</tr>
+<tr>
+<td>Ändern des Ausleseintervalls</td>
+<td>/interval</td>
+<td>RAW - Sekunden</td>
+<td>FUXA</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="portainer-dokumentation">Portainer Dokumentation</h3>
+<pre class="hljs"><code><div>- User: admin
+- Password: scada!system!123
+</div></code></pre>
+<hr>
+<h3 id="influxdb2-dokumentation">InfluxDB2 Dokumentation</h3>
+<pre class="hljs"><code><div>- User: admin
+- Password: scada!123
+</div></code></pre>
+<hr>
+<h3 id="solarsteuerung">Solarsteuerung</h3>
+<h4 id="verf%C3%BCgbare-env-variablen">Verfügbare Env-Variablen</h4>
+<p>Variablen müssen im docker-compose file oder in Portainer gesetzt werden. Wird hier nichts gesetet, werden die angegebenen Standardwerte genutzt.</p>
+<table>
+<thead>
+<tr>
+<th>Beschreibung</th>
+<th>Variablenname</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mountpoint der genutzt wird um die SD-Karte zu mounten</td>
+<td>mountpoint</td>
+<td>&quot;/mnt/usb&quot;</td>
+</tr>
+<tr>
+<td>Befehl der genutzt wird, um die SSH-Verbindung zum Openwrtrouter herzustellen</td>
+<td>sshcommand</td>
+<td>&quot;ssh root@openwrt.fritz.box&quot;</td>
+</tr>
+<tr>
+<td>Transportart des MQTT-Clients</td>
+<td>transport</td>
+<td>&quot;tcp&quot;</td>
+</tr>
+<tr>
+<td>Hostname des MQTT-Brokers</td>
+<td>brokerhostname</td>
+<td>&quot;raspberrypi.fritz.box&quot;</td>
+</tr>
+<tr>
+<td>Port des MQTT-Services</td>
+<td>mqttport</td>
+<td>&quot;1883&quot;</td>
+</tr>
+<tr>
+<td>Topic für die Datenübertragung</td>
+<td>datatopic</td>
+<td>&quot;/home/solar/state&quot;</td>
+</tr>
+<tr>
+<td>Topic um geänderte Intervalle zu empfangen</td>
+<td>intervalTopic</td>
+<td>&quot;/home/solar/interval&quot;</td>
+</tr>
+<tr>
+<td>Die erste Zeile im .DAT file. (Sollte nicht geändert werden müssen)</td>
+<td>csvheader</td>
+<td>&quot;...Sehr viel Text...&quot;</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="wichtige-dateien">Wichtige Dateien</h3>
+<details>
+<summary>docker-compose.yml</summary>
+<pre class="hljs"><code><div><span class="hljs-attr">version:</span> <span class="hljs-string">"3"</span>
+
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">fuxa:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">frangoteam/fuxa:latest</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">fuxa</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-number">1881</span><span class="hljs-string">:1881</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./folders/fuxa/appdata:/usr/src/app/FUXA/server/_appdata:rw</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./folders/fuxa/db:/usr/src/app/FUXA/server/_db:rw</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./folders/fuxa/logs:/usr/src/app/FUXA/server/_logs:rw</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./folders/fuxa/images:/usr/src/app/FUXA/server/_images:rw</span>
+
+  <span class="hljs-attr">mosquitto:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">eclipse-mosquitto:latest</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">mosquitto</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./folders/mosquitto/config:/mosquitto/config:rw</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./folders/mosquitto/data:/mosquitto/data:rw</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./folders/mosquitto/log:/mosquitto/log:rw</span>
+
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-number">1883</span><span class="hljs-string">:1883</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-number">9001</span><span class="hljs-string">:9001</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+  <span class="hljs-attr">influxdb:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">influxdb:latest</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">influxdb2</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./folders/influxdb/data:/var/lib/influxdb2:rw</span>
+    <span class="hljs-attr">env_file:</span> <span class="hljs-string">config.env</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-number">8086</span><span class="hljs-string">:8086</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span>
+
+  <span class="hljs-attr">telegraf:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">telegraf:latest</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">telegraf</span>
+    <span class="hljs-comment">#    links:</span>
+    <span class="hljs-comment">#      - influxdb</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-comment">#  Map Telegraf configuration file</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./folders/influxdb/telegraf.conf:/etc/telegraf/telegraf.conf:ro</span>
+      <span class="hljs-comment">#  Map /tmp to permanent storage  (this includes /tmp/metrics.out)</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./folders/influxdb:/tmp:rw</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span>
+    <span class="hljs-attr">depends_on:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">influxdb</span>
+    <span class="hljs-attr">links:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">influxdb</span>
+  <span class="hljs-attr">wireguard:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">lscr.io/linuxserver/wireguard:latest</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">wireguard</span>
+    <span class="hljs-attr">cap_add:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NET_ADMIN</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">SYS_MODULE</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">PUID=1000</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">PGID=1000</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">TZ=Europe/London</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">SERVERURL=wireguard.domain.com</span> <span class="hljs-comment">#optional</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">SERVERPORT=51820</span> <span class="hljs-comment">#optional</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">PEERS=1</span> <span class="hljs-comment">#optional</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">PEERDNS=auto</span> <span class="hljs-comment">#optional</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">INTERNAL_SUBNET=10.13.13.0</span> <span class="hljs-comment">#optional</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">ALLOWEDIPS=0.0.0.0/0</span> <span class="hljs-comment">#optional</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">LOG_CONFS=true</span> <span class="hljs-comment">#optional</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">/path/to/appdata/config:/config</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">/lib/modules:/lib/modules</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-number">51820</span><span class="hljs-string">:51820/udp</span>
+    <span class="hljs-attr">sysctls:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">net.ipv4.conf.all.src_valid_mark=1</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span>
+</div></code></pre>
+</details>
+<details>
+    <summary>ESP32 Sensorwerte</summary>
+<pre class="hljs"><code><div>
+sensornames = [
+    (<span class="hljs-string">b'Einschaltdauer'</span>, <span class="hljs-string">'str'</span>),
+    (<span class="hljs-string">b'T-Vorlauf'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-Heissgas'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-Aussen'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-Raum'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-Puffer'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-Boiler'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-Sauggas'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-WP2'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-Abtauung'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-Mischer'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-Raumsoll'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-Ruecklauf'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'Durchfluss'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'Pt1000 EVI'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'Steps EVI'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'Ueberhitz'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'Steps EEV'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'T-Verdampf'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'P-Sauggas'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'Solldrehz'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'MischPos'</span>, <span class="hljs-string">'float'</span>),
+    (<span class="hljs-string">b'Mischer1'</span>, <span class="hljs-string">'str'</span>)
+]
+
+</div></code></pre>
+</details>
+
+</body>
+</html>
