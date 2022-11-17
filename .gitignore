@@ -6,7 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
-DockerServer/folders
+DockerServer/folders/**
+!**/.gitkeep
 
 # Distribution / packaging
 .Python
