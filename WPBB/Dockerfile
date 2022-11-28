@@ -8,6 +8,7 @@ ADD main.py .
 ADD config.py .
 ADD decoder.py .
 ADD interval.py .
+ADD log.py .
 ADD requirements.txt .
 
 

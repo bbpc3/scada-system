@@ -1,12 +1,16 @@
-import serial
+import json
 import sys
 import time
+
 import config
-import json
 import decoder
-from paho.mqtt.packettypes import PacketTypes
+import log
 import paho.mqtt.client as mqtt
+import serial
+from paho.mqtt.packettypes import PacketTypes
 from paho.mqtt.properties import Properties
+
+logger = log.get_module_logger(__name__)
 
 #import RPi.GPIO as GPIO
 failbuffer = json.loads('{"E01": 0, "A01": 0, "E02": 0, "A02": 0, "E03": 0, "A03": 0, "E04": 0, "A04": 0, "E05": 0, "A05": 0, "E06": 0, "A06": 0, "E07": 0, "A07": 0, "E08": 0, "A08": 0, "E09": 0, "A09": 0, "E10": 0, "A10": 0, "E11": 0, "A11": 0, "A12": 0, "A13": 0, "A14": 0, "A15": 0, "A16": 0}')
@@ -48,6 +52,7 @@ ser = serial.Serial(
 )
 
 def getdata(command : bytes):
+    logger.debug("Getting data...")
     temp = b""
     ser.read_all()
     ser.write(command + b"\r\n")
@@ -55,7 +60,7 @@ def getdata(command : bytes):
     while ser.in_waiting > 0:
         data = ser.read_all()
         if b"\f" in data:
-            print("Fail!! Sending A...")
+            logger.warn("Fail!! Sending A...")
             return None
         temp += data
         time.sleep(0.1)
@@ -77,11 +82,12 @@ while True:
         try:
             decoded = decoder.decode(decoder.getSection(buf))
             if decoded == failbuffer:
-                print("Failbuffer...skipping")
+                logger.warn("Failbuffer...skipping")
                 continue
-            payload = json.dumps(decoded)
+            payload = json.dumps(decoded, indent=2)
             client.publish(config.dataTopic, payload.encode())
-            
+            client.publish(config.debugTopic, buf)
+            logger.warn(f"Successfully published: {payload}")
         except:
             pass
     else:

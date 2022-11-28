@@ -12,4 +12,6 @@ transport = os.getenv('transport', 'tcp') # or 'tcp'
 broker = os.getenv('brokerhostname','raspberrypi.fritz.box') # eg. choosen-name-xxxx.cedalo.cloud
 myport = os.getenv('mqttport', 1883)
 dataTopic = os.getenv('datatopic', '/home/wp/state')
+debugTopic = os.getenv('datatopic', '/home/wp/debug')
+
 
