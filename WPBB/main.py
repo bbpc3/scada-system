@@ -52,7 +52,7 @@ ser = serial.Serial(
 )
 
 def getdata(command : bytes):
-    logger.debug("Getting data...")
+    #logger.debug("Getting data...")
     temp = b""
     ser.read_all()
     ser.write(command + b"\r\n")
@@ -87,13 +87,13 @@ while True:
             payload = json.dumps(decoded, indent=2)
             client.publish(config.dataTopic, payload.encode())
             client.publish(config.debugTopic, buf)
-            logger.warn(f"Successfully published: {payload}")
+            #logger.info(f"Successfully published payload...")
         except:
             pass
     else:
         ser.write(b"A\r\n")
         
-    time.sleep(5)
+    time.sleep(10)
 
     
         

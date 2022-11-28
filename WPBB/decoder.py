@@ -23,7 +23,7 @@ def decode(match : str):
             values[f'E{i}'] = "-"
         values[f'A{i}'] = "-"
     lines = [x.strip() for x in match.splitlines()]
-    split = [list(filter(None, x.split(" "))) for x in lines[3:] if len(x.split(" ")) > 1]
+    split = [list(filter(None, x.split(" "))) for x in lines if len(x.split(" ")) > 1]
     for element in split:
         try:
             if len(element) == 3:
