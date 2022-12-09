@@ -112,7 +112,7 @@ services:
     volumes:
       - /home/pi/scada-system/DokuServer/templates:/templates:ro
       - /home/pi/scada-system/DokuServer/firmware:/firmware:ro
-  piwpcontroller
+  piwpcontroller:
     image: bleialf/piwpcontroller
     container_name: wpcontroller
     restart: unless-stopped
