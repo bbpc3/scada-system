@@ -33,25 +33,17 @@ services:
     container_name: influxdb2
     volumes:
       - /home/pi/scada-system/DockerServer/folders/influxdb/data:/var/lib/influxdb2:rw
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=${DOCKER_INFLUXDB_INIT_MODE}
+      - DOCKER_INFLUXDB_INIT_USERNAME=${DOCKER_INFLUXDB_INIT_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${DOCKER_INFLUXDB_INIT_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${DOCKER_INFLUXDB_INIT_ADMIN_TOKEN}
+      - DOCKER_INFLUXDB_INIT_ORG=${DOCKER_INFLUXDB_INIT_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${DOCKER_INFLUXDB_INIT_BUCKET}
+      - TZ=Europe/Vienna
 
     ports:
       - 8086:8086
-    restart: unless-stopped
-
-  chronograf:
-    image: chronograf:latest
-    container_name: chronograf
-    ports:
-      - 3005:8888
-    volumes:
-      - /home/pi/scada-system/DockerServer/folders/chronograf/data:/var/lib/chronograf
-    depends_on:
-      - influxdb
-    environment:
-      - INFLUXDB_URL=http://influxdb:8086
-      - INFLUXDB_USERNAME=${DOCKER_INFLUXDB_INIT_USERNAME}
-      - INFLUXDB_TOKEN=${DOCKER_INFLUXDB_INIT_ADMIN_TOKEN}
-      - INFLUXDB_ORG=${DOCKER_INFLUXDB_INIT_ORG}
     restart: unless-stopped
 
   # grafana:
@@ -86,12 +78,7 @@ services:
   #   links:
   #     - influxdb
 
-  solarcontroller:
-    image: bleialf/solarcontroller:latest
-    container_name: solarcontroller
-    restart: unless-stopped
-    depends_on:
-      - mosquitto
+
 
   # influxdb_cleaner:
   #   image: bleialf/influxdb_cleaner:latest
@@ -112,9 +99,21 @@ services:
     volumes:
       - /home/pi/scada-system/DokuServer/templates:/templates:ro
       - /home/pi/scada-system/DokuServer/firmware:/firmware:ro
+      
   piwpcontroller:
     image: bleialf/piwpcontroller
     container_name: wpcontroller
     restart: unless-stopped
+    privileged: true
+
     volumes:
       - /dev/ttyAMA1:/dev/ttyAMA1
+      
+  pisolarcontroller:
+    image: bleialf/pisolarcontroller
+    container_name: pisolarcontroller
+    restart: unless-stopped
+    privileged: true
+
+    volumes:
+      - /dev:/dev
